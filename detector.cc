@@ -11,7 +11,8 @@ G4bool MySensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhis
 {
     G4Track *track = aStep->GetTrack();
 
-    track->SetTrackStatus(fStopAndKill);
+    //track->SetTrackStatus(fStopAndKill);//Esta línea hacía que 
+                                //la traza muriese en el detector
 
     G4StepPoint *preStepPoint = aStep->GetPreStepPoint();
     G4StepPoint *postStepPoint = aStep->GetPostStepPoint();
@@ -34,37 +35,24 @@ G4bool MySensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhis
     G4int evt = G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID();
     
     G4AnalysisManager *man = G4AnalysisManager::Instance();
-    if (copyNo < 100) {
-    man->FillNtupleIColumn(0, evt);
-    man->FillNtupleDColumn(1, posDetector.x());
-    man->FillNtupleDColumn(2, posDetector.y());
-    man->FillNtupleDColumn(3, posDetector.z());
-    man->AddNtupleRow(0); 
+
+    G4String particleName = track->GetDefinition()->GetParticleName();
+
+    int detectorIndex = -1;
+    if (copyNo < 100) detectorIndex = 0;
+    else if (copyNo < 200) detectorIndex = 1;
+    else if (copyNo < 300) detectorIndex = 2;
+    else if (copyNo < 400) detectorIndex = 3;
+
+    if (detectorIndex != -1) {//Nos aseguramos de que alguno de los detectores esta firing
+        man->FillNtupleIColumn(detectorIndex, 0, evt);
+        man->FillNtupleDColumn(detectorIndex, 1, posDetector.x());
+        man->FillNtupleDColumn(detectorIndex, 2, posDetector.y());
+        man->FillNtupleDColumn(detectorIndex, 3, posDetector.z());
+        man->FillNtupleSColumn(detectorIndex, 4, particleName);
+        man->AddNtupleRow(detectorIndex);
     }
 
-    else if (copyNo < 200) {
-        man->FillNtupleIColumn(4, evt);
-        man->FillNtupleDColumn(5, posDetector.x());
-        man->FillNtupleDColumn(6, posDetector.y());
-        man->FillNtupleDColumn(7, posDetector.z());
-        man->AddNtupleRow(1); 
-    }
-
-    else if (copyNo < 300) {
-        man->FillNtupleIColumn(8, evt);
-        man->FillNtupleDColumn(9, posDetector.x());
-        man->FillNtupleDColumn(10, posDetector.y());
-        man->FillNtupleDColumn(11, posDetector.z());
-        man->AddNtupleRow(2); 
-    }
-
-    else if (copyNo < 400) {
-        man->FillNtupleIColumn(12, evt);
-        man->FillNtupleDColumn(13, posDetector.x());
-        man->FillNtupleDColumn(14, posDetector.y());
-        man->FillNtupleDColumn(15, posDetector.z());
-        man->AddNtupleRow(2); 
-    }
 
     //Código que me imprime un mensaje si alguna de las partículas es un muón o antimuón
     if (track->GetDefinition()->GetParticleName() == "mu+" || 

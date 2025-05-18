@@ -17,10 +17,11 @@ void MyRunAction::BeginOfRunAction(const G4Run*)
     man->OpenFile("output.root");
 
     man->CreateNtuple("Hits1", "Hitsdata1");
-    man->CreateNtupleIColumn("fEvent");
-    man->CreateNtupleDColumn("fX");
+    man->CreateNtupleIColumn("fEvent");//columna de ints
+    man->CreateNtupleDColumn("fX");//columna de doubles
     man->CreateNtupleDColumn("fY");
     man->CreateNtupleDColumn("fZ");
+    man->CreateNtupleSColumn("particle");//columna de strings
     man->FinishNtuple();
 
     man->CreateNtuple("Hits2", "Hitsdata2");
@@ -28,6 +29,7 @@ void MyRunAction::BeginOfRunAction(const G4Run*)
     man->CreateNtupleDColumn("fX");
     man->CreateNtupleDColumn("fY");
     man->CreateNtupleDColumn("fZ");
+    man->CreateNtupleSColumn("particle");
     man->FinishNtuple();
 
     man->CreateNtuple("Hits3", "Hitsdata3");
@@ -35,6 +37,7 @@ void MyRunAction::BeginOfRunAction(const G4Run*)
     man->CreateNtupleDColumn("fX");
     man->CreateNtupleDColumn("fY");
     man->CreateNtupleDColumn("fZ");
+    man->CreateNtupleSColumn("particle");
     man->FinishNtuple();
 
     man->CreateNtuple("Hits4", "Hitsdata4");
@@ -42,6 +45,7 @@ void MyRunAction::BeginOfRunAction(const G4Run*)
     man->CreateNtupleDColumn("fX");
     man->CreateNtupleDColumn("fY");
     man->CreateNtupleDColumn("fZ");
+    man->CreateNtupleSColumn("particle");
     man->FinishNtuple();
 }
 

@@ -20,7 +20,7 @@ void MyPrimaryGenerator::GeneratePrimaries(G4Event* anEvent)
 
     fParticleGun->SetParticlePosition(G4ThreeVector(0, 0.2*m, 0*m));
     fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0,0,1));
-    fParticleGun->SetParticleEnergy(3*GeV);
+    fParticleGun->SetParticleEnergy(50*GeV);//energía tipica de los piones que llegan a las estaciones
     fParticleGun->SetParticleDefinition(particle);
 
     fParticleGun->GeneratePrimaryVertex(anEvent);
