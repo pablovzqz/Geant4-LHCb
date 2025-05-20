@@ -17,7 +17,7 @@ G4bool MySensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhis
     G4StepPoint *preStepPoint = aStep->GetPreStepPoint();
     G4StepPoint *postStepPoint = aStep->GetPostStepPoint();
 
-    G4ThreeVector posPhoton = preStepPoint->GetPosition();
+    //G4ThreeVector posPhoton = preStepPoint->GetPosition();
 
     //G4cout << "Photon position" << posPhoton << G4endl;
 
@@ -38,8 +38,10 @@ G4bool MySensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhis
 
     G4String particleName = track->GetDefinition()->GetParticleName();
 
+    G4double particleEnergy = track->GetTotalEnergy();
+
     int detectorIndex = -1;
-    if (copyNo < 100) detectorIndex = 0;
+    if (copyNo < 100) detectorIndex = 0;//Cada capa de detectores cuenta con 100 detectores
     else if (copyNo < 200) detectorIndex = 1;
     else if (copyNo < 300) detectorIndex = 2;
     else if (copyNo < 400) detectorIndex = 3;
@@ -50,6 +52,7 @@ G4bool MySensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhis
         man->FillNtupleDColumn(detectorIndex, 2, posDetector.y());
         man->FillNtupleDColumn(detectorIndex, 3, posDetector.z());
         man->FillNtupleSColumn(detectorIndex, 4, particleName);
+        man->FillNtupleDColumn(detectorIndex, 5, particleEnergy);
         man->AddNtupleRow(detectorIndex);
     }
 

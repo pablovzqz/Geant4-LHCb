@@ -12,7 +12,7 @@ void MyRunAction::BeginOfRunAction(const G4Run*)
 {
     G4AnalysisManager *man = G4AnalysisManager::Instance();
 
-    man->SetVerboseLevel(2);
+    man->SetVerboseLevel(2);//Para asegurarnos de que se está creando el archivo ROOT
 
     man->OpenFile("output.root");
 
@@ -22,6 +22,7 @@ void MyRunAction::BeginOfRunAction(const G4Run*)
     man->CreateNtupleDColumn("fY");
     man->CreateNtupleDColumn("fZ");
     man->CreateNtupleSColumn("particle");//columna de strings
+    man->CreateNtupleDColumn("Energy");
     man->FinishNtuple();
 
     man->CreateNtuple("Hits2", "Hitsdata2");
@@ -30,6 +31,7 @@ void MyRunAction::BeginOfRunAction(const G4Run*)
     man->CreateNtupleDColumn("fY");
     man->CreateNtupleDColumn("fZ");
     man->CreateNtupleSColumn("particle");
+    man->CreateNtupleDColumn("Energy");
     man->FinishNtuple();
 
     man->CreateNtuple("Hits3", "Hitsdata3");
@@ -38,6 +40,7 @@ void MyRunAction::BeginOfRunAction(const G4Run*)
     man->CreateNtupleDColumn("fY");
     man->CreateNtupleDColumn("fZ");
     man->CreateNtupleSColumn("particle");
+    man->CreateNtupleDColumn("Energy");
     man->FinishNtuple();
 
     man->CreateNtuple("Hits4", "Hitsdata4");
@@ -46,6 +49,7 @@ void MyRunAction::BeginOfRunAction(const G4Run*)
     man->CreateNtupleDColumn("fY");
     man->CreateNtupleDColumn("fZ");
     man->CreateNtupleSColumn("particle");
+    man->CreateNtupleDColumn("Energy");
     man->FinishNtuple();
 }
 
